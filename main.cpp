@@ -4,6 +4,9 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
+    app.setOrganizationName("FraysDev");
+    app.setOrganizationDomain("dev.frays");
+    app.setApplicationName("Remiter");
 
     QQmlApplicationEngine engine;
     QObject::connect(

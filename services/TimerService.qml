@@ -5,7 +5,6 @@ import QtQuick
 QtObject {
     id: root
 
-    // ── Public state ──────────────────────────────────────────────────────
     enum State {
         Idle,
         Running,
@@ -27,7 +26,6 @@ QtObject {
         return pad(h) + ":" + pad(m) + ":" + pad(sec)
     }
 
-    // ── Public API ────────────────────────────────────────────────────────
     function start(duration, additional) {
         if (duration === undefined || duration <= 0) return
 
@@ -62,8 +60,7 @@ QtObject {
         remaining = 0
     }
 
-    // ── Internal ──────────────────────────────────────────────────────────
-    property real _lastTick: Date.now()   // timestamp of last tick for precision
+    property real _lastTick: Date.now()
 
     property var _tick: Timer {
         interval: 100

@@ -8,6 +8,7 @@ set(qml_singletons
     Style.qml
     services/ClockService.qml
     services/TimerService.qml
+    settings/TimerSetting.qml
 )
 
 find_package(Qt6 REQUIRED COMPONENTS Quick Svg)
@@ -25,12 +26,14 @@ qt_add_qml_module(appremiter
     URI remiter
     QML_FILES
         Main.qml
-        commons/CTextField.qml
-        commons/CText.qml
         commons/CButton.qml
+        commons/CButtonless.qml
+        commons/CText.qml
+        commons/CTextField.qml
         commons/SvgIcon.qml
-        components/TimerControl.qml
-        components/TimerPreset.qml
+        components/controls/TimerControl.qml
+        components/presets/TimerPreset.qml
+        components/Titlebar.qml
         windows/PopupTime.qml
         ${qml_singletons}
     RESOURCES
@@ -52,12 +55,16 @@ qt_add_qml_module(appremiter
         assets/icons/modules/stopwatch/lap.svg
         assets/icons/presets/add.svg
         assets/icons/presets/edit.svg
-        assets/icons/presets/remove.svg
+        assets/icons/presets/save.svg
+        assets/icons/presets/delete.svg
+        assets/icons/presets/delete_all.svg
+        assets/icons/windows/show.svg
+        assets/icons/windows/lock.svg
+        assets/icons/windows/unlock.svg
+        assets/icons/windows/close.svg
+        assets/icons/windows/minimize.svg
         assets/icons/left.svg
         assets/icons/right.svg
-        assets/icons/show.svg
-        assets/icons/lock.svg
-        assets/icons/unlock.svg
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
