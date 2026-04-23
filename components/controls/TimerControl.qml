@@ -6,166 +6,17 @@ import "../presets"
 import "../../commons"
 
 Item {
-    id: root
+    id: timerControl
+    property alias printMessageLog: messageLog
 
     ColumnLayout {
         id: layout
         anchors.fill: parent
         spacing: 8
 
-        // Rectangle {
-        //     color: "#303030"
-        //     Layout.fillWidth: true
-        //     Layout.fillHeight: true
-        //     radius: 4
-
-        //     ColumnLayout {
-        //         id: timerPresetLayout
-        //         anchors.fill: parent
-        //         spacing: 0
-
-        //         RowLayout {
-        //             Layout.fillWidth: true
-        //             Layout.margins: 8
-
-        //             CText {
-        //                 text: "Timer Preset"
-        //                 font.pixelSize: 16
-        //                 font.weight: 700
-        //             }
-
-        //             Item { Layout.fillWidth: true }
-
-        //             CButton {
-        //                 iconSource: "presets/remove.svg"
-        //                 text: "Remove"
-        //                 visible: presetList.currentIndex >= 0
-        //                 onClicked: {
-        //                     if (presetList.currentIndex >= 0)
-        //                         presetModel.remove(presetList.currentIndex)
-        //                 }
-        //             }
-
-        //             CButton {
-        //                 iconSource: "presets/edit.svg"
-        //                 text: "Edit"
-        //                 visible: presetList.currentIndex >= 0
-        //                 onClicked: console.log("Edit preset", presetList.currentIndex)
-        //             }
-
-        //             CButton {
-        //                 iconSource: "presets/delete.svg"
-        //                 text: "Delete All"
-        //                 onClicked: TimerSetting.forceRestart()
-        //             }
-
-        //             CButton {
-        //                 iconSource: "presets/add.svg"
-        //                 text: "Add"
-        //                 onClicked: {
-        //                     TimerSetting.addPreset({
-        //                         "name": nameTimerInput.text,
-        //                         "duration": mainTimerInput.text,
-        //                         "extend": extendTimerInput.text,
-        //                     })
-
-        //                     // TimerSetting.forceRestart()
-        //                 }
-        //             }
-        //         }
-
-        //         ListView {
-        //             id: presetList
-        //             Layout.fillWidth: true
-        //             Layout.fillHeight: true
-        //             clip: true
-        //             currentIndex: -1
-
-        //             model: ListModel {
-        //                 id: presetModel
-        //             }
-
-        //             Connections {
-        //                 target: TimerSetting
-        //                 function onPresetsRawChanged() { presetList.syncModel() }
-        //             }
-
-        //             Component.onCompleted: syncModel()
-
-        //             function syncModel() {
-        //                 presetModel.clear()
-        //                 TimerSetting.presetsRaw.forEach(p => presetModel.append(p))
-        //             }
-
-        //             delegate: Rectangle {
-        //                 width: presetList.width
-        //                 height: presetInfo.implicitHeight + 16
-        //                 color: model.index % 2 === 0 ? "#404040" : "#484848"
-
-        //                 HoverHandler {
-        //                     id: presetHoverHandler
-        //                 }
-
-        //                 ColumnLayout {
-        //                     id: presetInfo
-        //                     anchors.left: parent.left
-        //                     anchors.verticalCenter: parent.verticalCenter
-        //                     anchors.margins: 8
-        //                     spacing: 0
-
-        //                     CText {
-        //                         text: model.name
-        //                         font.pixelSize: 16
-        //                     }
-
-        //                     RowLayout {
-        //                         spacing: 4
-
-        //                         CText {
-        //                             text: model.duration
-        //                             font.family: Style.timeFont
-        //                             font.weight: 600
-        //                             font.pixelSize: 14
-        //                         }
-
-        //                         CText {
-        //                             visible: model.extend !== "+00:00:00"
-        //                             text: model.extend
-        //                             font.family: Style.timeFont
-        //                             font.weight: 600
-        //                             font.pixelSize: 10
-        //                         }
-        //                     }
-        //                 }
-
-        //                 RowLayout {
-        //                     id: presetActionButton
-        //                     anchors.right: parent.right
-        //                     anchors.verticalCenter: parent.verticalCenter
-        //                     anchors.margins: 8
-        //                     visible: presetHoverHandler.hovered
-
-        //                     CButton { iconSource: "presets/remove.svg" }
-        //                     CButton { iconSource: "presets/edit.svg" }
-        //                     CButton { iconSource: "presets/add.svg" }
-        //                 }
-
-        //                 MouseArea {
-        //                     anchors.fill: parent
-        //                     onClicked: presetList.currentIndex = model.index
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
-
         TimerPreset {
             Layout.fillWidth: true
             Layout.fillHeight: true
-
-            nameTimerInput: nameTimerInput
-            mainTimerInput: mainTimerInput
-            extendTimerInput: extendTimerInput
         }
 
         Rectangle {
@@ -181,14 +32,14 @@ Item {
                 anchors.margins: 8
 
                 CTextField {
-                    id: nameTimerInput
+                    id: timerNameInput
                     Layout.fillWidth: true
                     placeholderText: "New Timer"
                 }
 
                 // Time display
                 CTextField {
-                    id: mainTimerInput
+                    id: timerDurationInput
                     Layout.fillWidth: true
 
                     text: "00:00:00"
@@ -204,7 +55,7 @@ Item {
                 }
 
                 CTextField {
-                    id: extendTimerInput
+                    id: timerExtendInput
                     Layout.fillWidth: true
 
                     text: "+00:00:00"
@@ -228,16 +79,8 @@ Item {
                 iconSource: "controls/play.svg"
                 text: "Play"
                 onClicked: {
-                    let [hm, mm, sm] = mainTimerInput.text.split(":")
-                    let durMain = (parseInt(hm) * 3600 + parseInt(mm) * 60 + parseInt(sm)) * 1000
-                    if (durMain <= 0) return messageLog.error("Timer cannot start at 0 or less!")
-                    else durMain += 900
-
-                    let [he, me, se] = extendTimerInput.text.split(":")
-                    let durExtend = (parseInt(he) * 3600 + parseInt(me) * 60 + parseInt(se)) * 1000
-                    if (durExtend > 0) durExtend += 900
-
-                    TimerService.start(durMain, durExtend)
+                    const timer = parseTimer();
+                    if (timer !== null) TimerService.start(...timer);
                 }
             }
 
@@ -265,16 +108,8 @@ Item {
                 iconSource: "controls/restart.svg"
                 text: "Restart"
                 onClicked: {
-                    let [hm, mm, sm] = mainTimerInput.text.split(":")
-                    let durMain = (parseInt(hm) * 3600 + parseInt(mm) * 60 + parseInt(sm)) * 1000
-                    if (durMain <= 0) return messageLog.error("Timer cannot restart at 0 or less!")
-                    else durMain += 900
-
-                    let [he, me, se] = extendTimerInput.text.split(":")
-                    let durExtend = (parseInt(he) * 3600 + parseInt(me) * 60 + parseInt(se)) * 1000
-                    if (durExtend > 0) durExtend += 900
-
-                    TimerService.start(durMain, durExtend)
+                    const timer = parseTimer();
+                    if (timer !== null) TimerService.start(...timer);
                 }
             }
 
@@ -319,8 +154,33 @@ Item {
         onTriggered: messageLog.visible = false
     }
 
-    function presetSelected(model) {
-        nameTimerInput.text = model.name
-        mainTimerInput.text = model.duration
+    function setFieldsFromPreset(preset) {
+        timerNameInput.text = preset.name
+        timerDurationInput.text = preset.duration
+        timerExtendInput.text = preset.extend
+    }
+
+    function getFieldsAsPreset(preset) {
+        return {
+            "name": timerNameInput.text,
+            "duration": timerDurationInput.text,
+            "extend": timerExtendInput.text,
+        }
+    }
+
+    function parseTimer() {
+        let [hm, mm, sm] = timerDurationInput.text.split(":");
+        let durMain = (parseInt(hm) * 3600 + parseInt(mm) * 60 + parseInt(sm)) * 1000;
+        if (durMain <= 0) {
+            messageLog.error("Timer value is 0 or less!");
+            return null;
+        }
+        else durMain += 900;
+
+        let [he, me, se] = timerExtendInput.text.split(":");
+        let durExtend = (parseInt(he) * 3600 + parseInt(me) * 60 + parseInt(se)) * 1000;
+        if (durExtend > 0) durExtend += 900;
+
+        return [durMain, durExtend];
     }
 }

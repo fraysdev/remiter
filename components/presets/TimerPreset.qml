@@ -7,10 +7,6 @@ import "../../commons"
 Item {
     id: root
 
-    required property var nameTimerInput
-    required property var mainTimerInput
-    required property var extendTimerInput
-
     property bool isEditing: false
     property int editIndex: -1
 
@@ -46,11 +42,7 @@ Item {
                     visible: !root.isEditing
                     iconSource: "presets/add.svg"
                     text: "Add"
-                    onClicked: TimerSetting.addPreset({
-                        "name": nameTimerInput.text,
-                        "duration": mainTimerInput.text,
-                        "extend": extendTimerInput.text,
-                    })
+                    onClicked: TimerSetting.addPreset(timerControl.getFieldsAsPreset())
                 }
 
                 CButton {
@@ -58,14 +50,12 @@ Item {
                     iconSource: "presets/save.svg"
                     text: "Save"
                     onClicked: {
-                        TimerSetting.updatePreset(root.editIndex, {
-                            "name": nameTimerInput.text,
-                            "duration": mainTimerInput.text,
-                            "extend": extendTimerInput.text,
-                        });
+                        TimerSetting.updatePreset(
+                            root.editIndex,
+                            timerControl.getFieldsAsPreset());
 
-                        root.isEditing = false
-                        root.editIndex = -1
+                        root.isEditing = false;
+                        root.editIndex = -1;
                     }
                 }
             }
@@ -89,8 +79,8 @@ Item {
                 Component.onCompleted: syncModel()
 
                 function syncModel() {
-                    presetModel.clear()
-                    TimerSetting.presetsRaw.forEach(p => presetModel.append(p))
+                    presetModel.clear();
+                    TimerSetting.presetsRaw.forEach(p => presetModel.append(p));
                 }
 
                 delegate: Rectangle {
@@ -150,12 +140,21 @@ Item {
                         CButtonless {
                             iconSource: "presets/edit.svg"
                             onClicked: {
-                                nameTimerInput.text = model.name
-                                mainTimerInput.text = model.duration
-                                extendTimerInput.text = model.extend
+                                timerControl.setFieldsFromPreset(model);
+                                root.isEditing = true;
+                                root.editIndex = model.index;
+                            }
+                        }
 
-                                root.isEditing = true
-                                root.editIndex = model.index
+                        CButtonless {
+                            iconSource: "controls/play.svg"
+                            onClicked: {
+                                timerControl.setFieldsFromPreset(model);
+
+                                const timer = parseTimer();
+                                if (timer !== null) {
+                                    TimerService.start(...timer);
+                                }
                             }
                         }
                     }
