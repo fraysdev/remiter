@@ -22,7 +22,10 @@ Item {
 
             RowLayout {
                 Layout.fillWidth: true
-                Layout.margins: 8
+                Layout.topMargin: 5
+                Layout.leftMargin: 8
+                Layout.rightMargin: 8
+                Layout.bottomMargin: 5
 
                 CText {
                     text: "Timer Preset"

@@ -6,15 +6,12 @@ import QtQuick.VectorImage
 Button {
     id: control
 
-    // property item icon
     property string iconSource: ""
     property int iconSize: 18
 
     background: Rectangle {
-        color: "#3C3C3C"
+        color: "#404040"
         radius: 5
-        border.color: control.down ? "#C0888888" :"#888888"
-        border.width: 1
     }
 
     contentItem: RowLayout {

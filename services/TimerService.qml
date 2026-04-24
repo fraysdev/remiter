@@ -1,4 +1,3 @@
-// TimerService.qml
 pragma Singleton
 import QtQuick
 
@@ -17,12 +16,11 @@ QtObject {
     property int remaining: 0
     property int extend: 0
 
-    // Derived display
     readonly property string display: {
-        var s = Math.floor(remaining / 1000)
-        var h = Math.floor(s / 3600)
-        var m = Math.floor((s % 3600) / 60)
-        var sec = s % 60
+        let s = Math.floor(remaining / 1000)
+        let h = Math.floor(s / 3600)
+        let m = Math.floor((s % 3600) / 60)
+        let sec = s % 60
         return pad(h) + ":" + pad(m) + ":" + pad(sec)
     }
 
@@ -67,8 +65,8 @@ QtObject {
         repeat: true
         running: false
         onTriggered: {
-            var now = Date.now()
-            var elapsed = now - root._lastTick
+            let now = Date.now()
+            let elapsed = now - root._lastTick
             root._lastTick = now
             root.remaining = Math.max(0, root.remaining - elapsed)
 
