@@ -8,7 +8,7 @@ While the app is usable, not all features has been implemented. I have some plan
       A countdown from certain duration until ends at 00:00.
   - [X] Extended timer
   - [X] Presets
-- [ ] **Stopwatch**  
+- [X] **Stopwatch**  
       Measuring time from start (active) to end (deactive)
 - [ ] **Alarm**  
       Same as timer, but instead target time instead of duration.
