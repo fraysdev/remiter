@@ -7,38 +7,85 @@ Item {
     id: root
     implicitHeight: 26
 
-    RowLayout {
+    // ── Left: mode selector ───────────────────────────────────────────────
+    Rectangle {
         id: modeTitle
         anchors.left: root.left
         anchors.verticalCenter: root.verticalCenter
-        spacing: 8
+        implicitWidth: modeLayout.width + 8
+        implicitHeight: modeLayout.height
+        color: "#303030"
+        radius: 5
 
         RowLayout {
-            CButton {
-                iconSource: "left.svg"
+            id: modeLayout
+            anchors.verticalCenter: parent.verticalCenter
+            spacing: 8
+
+            RowLayout {
+                Layout.fillWidth: true
+                spacing: 0
+
+                CButton {
+                    iconSource: "modules/timer.svg"
+                    onClicked: {
+                        modeText.text = "Timer"
+                        mainWindow.currentMode = 0
+                    }
+                    background: Rectangle {
+                        color: "#404040"
+                        topLeftRadius: 5
+                        bottomLeftRadius: 5
+                    }
+                }
+                CButton {
+                    iconSource: "modules/stopwatch.svg"
+                    onClicked: {
+                        modeText.text = "Stopwatch"
+                        mainWindow.currentMode = 1
+                    }
+                    background: Rectangle {
+                        color: "#404040"
+                        topRightRadius: 5
+                        bottomRightRadius: 5
+                    }
+                }
             }
 
-            CButton {
-                iconSource: "right.svg"
+            CText {
+                id: modeText
+                Layout.alignment: Qt.AlignVCenter
+                text: "Timer"
+                font.pixelSize: 14
             }
         }
+    }
 
+    // ── Center: app title + drag area ────────────────────────────────────
+    Item {
+        id: dragArea
+        anchors.left: modeTitle.right
+        anchors.right: appButton.left
+        anchors.top: root.top
+        anchors.bottom: root.bottom
 
-        CText {
-            anchors.leftMargin: 4
-            text: "Timer"
-            font.pixelSize: 14
+        // DragHandler only here — buttons are outside this area
+        DragHandler {
+            onActiveChanged: {
+                if (active) mainWindow.startSystemMove()
+            }
         }
     }
 
     CText {
         id: appTitle
-        anchors.centerIn: parent
+        anchors.centerIn: root
         text: "Remiter"
         font.pixelSize: 16
         font.weight: 700
     }
 
+    // ── Right: window buttons ─────────────────────────────────────────────
     RowLayout {
         id: appButton
         anchors.right: root.right
@@ -54,7 +101,6 @@ Item {
                 if (!popupTime.visible) {
                     popupTime.show()
                 }
-
                 console.log("Lock")
             }
         }
