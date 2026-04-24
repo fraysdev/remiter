@@ -7,6 +7,7 @@ Item {
     id: root
     implicitHeight: 26
 
+    // ── Left: mode selector ───────────────────────────────────────────────
     Rectangle {
         id: modeTitle
         anchors.left: root.left
@@ -60,15 +61,31 @@ Item {
         }
     }
 
+    // ── Center: app title + drag area ────────────────────────────────────
+    Item {
+        id: dragArea
+        anchors.left: modeTitle.right
+        anchors.right: appButton.left
+        anchors.top: root.top
+        anchors.bottom: root.bottom
+
+        // DragHandler only here — buttons are outside this area
+        DragHandler {
+            onActiveChanged: {
+                if (active) mainWindow.startSystemMove()
+            }
+        }
+    }
 
     CText {
         id: appTitle
-        anchors.centerIn: parent
+        anchors.centerIn: root
         text: "Remiter"
         font.pixelSize: 16
         font.weight: 700
     }
 
+    // ── Right: window buttons ─────────────────────────────────────────────
     RowLayout {
         id: appButton
         anchors.right: root.right
@@ -84,7 +101,6 @@ Item {
                 if (!popupTime.visible) {
                     popupTime.show()
                 }
-
                 console.log("Lock")
             }
         }
