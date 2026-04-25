@@ -6,8 +6,8 @@ QtObject {
     readonly property string textFont: "Sen"
     readonly property string timeFont: "Input Mono"
 
-    readonly property color textColor: "#f0f0f0"
-    readonly property color activeColor: "green"
-    readonly property color extendColor: "orange"
-    readonly property color overtimeColor: "red"
+    readonly property color textColor: "#ffffff"
+    readonly property color textColorRunning: "#e0f777"
+    readonly property color textColorExtend: "#f7c777"
+    readonly property color textColorFinish: "#f77777"
 }
