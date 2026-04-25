@@ -7,7 +7,6 @@ Item {
     id: root
     implicitHeight: 26
 
-    // ── Left: mode selector ───────────────────────────────────────────────
     Rectangle {
         id: modeTitle
         anchors.left: root.left
@@ -61,58 +60,68 @@ Item {
         }
     }
 
-    // ── Center: app title + drag area ────────────────────────────────────
-    Item {
-        id: dragArea
-        anchors.left: modeTitle.right
-        anchors.right: appButton.left
-        anchors.top: root.top
-        anchors.bottom: root.bottom
-
-        // DragHandler only here — buttons are outside this area
-        DragHandler {
-            onActiveChanged: {
-                if (active) mainWindow.startSystemMove()
-            }
-        }
-    }
-
-    CText {
-        id: appTitle
-        anchors.centerIn: root
-        text: "Remiter"
-        font.pixelSize: 16
-        font.weight: 700
-    }
-
-    // ── Right: window buttons ─────────────────────────────────────────────
-    RowLayout {
-        id: appButton
+    Rectangle {
+        id: popupControl
         anchors.right: root.right
         anchors.verticalCenter: root.verticalCenter
-        spacing: 0
+        implicitWidth: popupCLayout.width + 8
+        implicitHeight: popupCLayout.height
+        color: "#303030"
+        radius: 5
 
-        CButtonless {
-            iconSource: {
-                if (!popupTime.visible) return "windows/show.svg"
-                return "windows/unlock.svg"
-            }
-            onClicked: {
-                if (!popupTime.visible) {
-                    popupTime.show()
+        RowLayout {
+            id: popupCLayout
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.right: parent.right
+            spacing: 8
+
+            CText {
+                Layout.alignment: Qt.AlignVCenter
+                text: {
+                    if (!popupTime.visible) return "Hidden"
+                    return popupTime.alwaysOnTop ? "Locked" : "Unlocked"
                 }
-                console.log("Lock")
+                font.pixelSize: 14
             }
-        }
 
-        CButtonless {
-            iconSource: "windows/minimize.svg"
-            onClicked: mainWindow.showMinimized()
-        }
-
-        CButtonless {
-            iconSource: "windows/close.svg"
-            onClicked: mainWindow.close()
+            CButton {
+                iconSource: {
+                    if (!popupTime.visible) return "windows/show.svg"
+                    return popupTime.alwaysOnTop ? "windows/lock.svg" : "windows/unlock.svg"
+                }
+                onClicked: {
+                    if (!popupTime.visible) {
+                        popupTime.show()
+                        return
+                    }
+                    popupTime.alwaysOnTop = !popupTime.alwaysOnTop
+                }
+                background: Rectangle {
+                    color: "#404040"
+                    radius: 5
+                }
+            }
         }
     }
+
+    // RowLayout {
+    //     id: appButton
+    //     anchors.right: root.right
+    //     anchors.verticalCenter: root.verticalCenter
+    //     spacing: 0
+
+    //     CButton {
+    //         iconSource: {
+    //             if (!popupTime.visible) return "windows/show.svg"
+    //             return popupTime.alwaysOnTop ? "windows/lock.svg" : "windows/unlock.svg"
+    //         }
+    //         onClicked: {
+    //             if (!popupTime.visible) {
+    //                 popupTime.show()
+    //                 return
+    //             }
+    //             popupTime.alwaysOnTop = !popupTime.alwaysOnTop
+    //         }
+    //     }
+    // }
 }

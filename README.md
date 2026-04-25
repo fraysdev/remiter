@@ -10,6 +10,7 @@ While the app is usable, not all features has been implemented. I have some plan
   - [X] Presets
 - [X] **Stopwatch**  
       Measuring time from start (active) to end (deactive)
+  - [X] Laps
 - [ ] **Alarm**  
       Same as timer, but instead target time instead of duration.
 - [ ] **Schedule**  

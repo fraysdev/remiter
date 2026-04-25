@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(remiter VERSION 0.2.1 LANGUAGES CXX)
+project(remiter VERSION 0.2.2 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -12,7 +12,7 @@ set(qml_singletons
     settings/TimerSetting.qml
 )
 
-find_package(Qt6 REQUIRED COMPONENTS Quick Svg)
+find_package(Qt6 REQUIRED COMPONENTS Quick Svg QuickControls2)
 
 qt_standard_project_setup(REQUIRES 6.10)
 
@@ -83,10 +83,7 @@ set_target_properties(appremiter PROPERTIES
     WIN32_EXECUTABLE TRUE
 )
 
-target_link_libraries(appremiter
-    PRIVATE Qt6::Quick
-    PRIVATE Qt6::Svg
-)
+target_link_libraries(appremiter PRIVATE Qt6::Quick Qt6::Svg Qt6::QuickControls2)
 
 install(TARGETS appremiter
     BUNDLE DESTINATION .

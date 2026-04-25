@@ -8,6 +8,16 @@ PopupLayout {
     name: "Stopwatch"
     iconSource: "modules/stopwatch.svg"
     timeDisplay: StopwatchService.state !== StopwatchService.State.Idle ? StopwatchService.display : ""
+    timeColor: {
+        if (StopwatchService.state === StopwatchService.State.Idle)
+            return Style.textColor
+
+        let color = Style.textColorRunning
+        if (StopwatchService.state === StopwatchService.State.Paused)
+            color = Qt.tint(color, "#60202020")
+
+        return color
+    }
     status: {
         if (StopwatchService.state === StopwatchService.State.Paused)
             return "Paused"
