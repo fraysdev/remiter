@@ -1,5 +1,6 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQuickStyle>
 
 int main(int argc, char *argv[])
 {
@@ -7,6 +8,8 @@ int main(int argc, char *argv[])
     app.setOrganizationName("FraysDev");
     app.setOrganizationDomain("dev.frays");
     app.setApplicationName("Remiter");
+
+    QQuickStyle::setStyle("Fusion");
 
     QQmlApplicationEngine engine;
     QObject::connect(

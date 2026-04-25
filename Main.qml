@@ -8,8 +8,10 @@ import "components/controls"
 
 Window {
     id: mainWindow
-    width: 500
-    height: 600
+    minimumWidth: 500
+    maximumWidth: 500
+    minimumHeight: 600
+    maximumHeight: 600
     visible: true
     color: "#202020"
     title: "Retimer - Config@Timer"
@@ -35,14 +37,17 @@ Window {
 
         Titlebar {
             Layout.fillWidth: true
-            Layout.margins: 8
+            Layout.topMargin: 8
+            Layout.leftMargin: 8
+            Layout.rightMargin: 8
+            Layout.bottomMargin: 0
         }
 
-        Rectangle {
-            color: "#808080"
-            Layout.fillWidth: true
-            Layout.preferredHeight: 1
-        }
+        // Rectangle {
+        //     color: "#808080"
+        //     Layout.fillWidth: true
+        //     Layout.preferredHeight: 1
+        // }
 
         StackLayout {
             currentIndex: mainWindow.currentMode

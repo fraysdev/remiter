@@ -12,6 +12,23 @@ Window {
     color: "#202020"
     title: "Retimer - Time"
 
+    property bool alwaysOnTop: false
+    flags: Qt.Window
+         | Qt.WindowTitleHint
+         | Qt.WindowSystemMenuHint
+         | Qt.WindowMinimizeButtonHint
+         | Qt.WindowMaximizeButtonHint
+         | Qt.WindowCloseButtonHint
+         | (alwaysOnTop ? Qt.WindowStaysOnTopHint : Qt.Widget)
+    transientParent: alwaysOnTop ? null : mainWindow
+
+    Connections {
+        target: mainWindow
+        function onClosing() {
+            root.close()
+        }
+    }
+
     StackLayout {
         currentIndex: mainWindow.currentMode
         anchors.fill: parent
