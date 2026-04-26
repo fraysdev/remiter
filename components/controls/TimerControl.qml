@@ -35,6 +35,7 @@ Item {
                     id: timerNameInput
                     Layout.fillWidth: true
                     placeholderText: "New Timer"
+                    font.pixelSize: 16
                 }
 
                 // Time display
@@ -67,6 +68,7 @@ Item {
 
                     font.family: Style.timeFont
                     font.weight: 600
+                    font.pixelSize: 16
                 }
             }
         }

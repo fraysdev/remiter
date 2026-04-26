@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(remiter VERSION 0.2.2 LANGUAGES CXX)
+project("Remiter" VERSION 0.2.2 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -16,14 +16,14 @@ find_package(Qt6 REQUIRED COMPONENTS Quick Svg QuickControls2)
 
 qt_standard_project_setup(REQUIRES 6.10)
 
-qt_add_executable(appremiter
+qt_add_executable(Remiter
     main.cpp
 )
 
 set_source_files_properties(${qml_singletons}
     PROPERTIES QT_QML_SINGLETON_TYPE TRUE)
 
-qt_add_qml_module(appremiter
+qt_add_qml_module(Remiter
     URI remiter
     QML_FILES
         Main.qml
@@ -75,17 +75,17 @@ qt_add_qml_module(appremiter
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
 # explicit, fixed bundle identifier manually though.
-set_target_properties(appremiter PROPERTIES
-#    MACOSX_BUNDLE_GUI_IDENTIFIER com.example.appremiter
+set_target_properties(Remiter PROPERTIES
+#    MACOSX_BUNDLE_GUI_IDENTIFIER com.example.Remiter
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
 )
 
-target_link_libraries(appremiter PRIVATE Qt6::Quick Qt6::Svg Qt6::QuickControls2)
+target_link_libraries(Remiter PRIVATE Qt6::Quick Qt6::Svg Qt6::QuickControls2)
 
-install(TARGETS appremiter
+install(TARGETS Remiter
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}

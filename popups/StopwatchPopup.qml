@@ -25,25 +25,27 @@ PopupLayout {
     }
     extendedStatus: RowLayout {
         visible: StopwatchService.laps.length !== 0
-        spacing: 4
+        spacing: maximize ? 16 : 4
 
         RowLayout {
             spacing: 0
+
             SvgIcon {
+                Layout.bottomMargin: maximize ? 8 : 2
                 source: "controls/lap.svg"
                 color: "#FFFFFF"
-                size: 15
+                size: maximize ? 60 : 15
             }
 
             CText {
                 text: StopwatchService.laps.length !== 0 ? "#" + StopwatchService.getLastLap().number : ""
-                font.pixelSize: 15
+                font.pixelSize: maximize ? 80 : 20
             }
         }
 
         CText {
             text: StopwatchService.laps.length !== 0 ? StopwatchService.getLastLap().totalFormat : ""
-            font.pixelSize: 15
+            font.pixelSize: maximize ? 80 : 20
             font.family: Style.timeFont
             font.weight: 600
         }

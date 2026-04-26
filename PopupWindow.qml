@@ -6,8 +6,8 @@ import "popups"
 
 Window {
     id: root
-    width: 350
-    height: 116
+    width: fontMetrics.maximumCharacterWidth * 53 + 20
+    height: fontMetrics.height * 8 + 20
     visible: true
     color: "#202020"
     title: "Retimer - Time"
@@ -29,6 +29,11 @@ Window {
         }
     }
 
+    FontMetrics {
+        id: fontMetrics
+        font.family: Style.timeFont
+    }
+
     StackLayout {
         currentIndex: mainWindow.currentMode
         anchors.fill: parent
@@ -36,6 +41,7 @@ Window {
         Loader {
             active: mainWindow.currentMode === 0
             sourceComponent: TimerPopup {
+                maximize: root.visibility === Window.Maximized
                 Layout.fillWidth: true
                 Layout.fillHeight: true
             }
@@ -43,6 +49,7 @@ Window {
         Loader {
             active: mainWindow.currentMode === 1
             sourceComponent: StopwatchPopup {
+                maximize: root.visibility === Window.Maximized
                 Layout.fillWidth: true
                 Layout.fillHeight: true
             }

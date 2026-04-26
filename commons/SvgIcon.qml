@@ -8,14 +8,16 @@ Item {
     property int size: 20
     property color color: "#FFFFFF"
 
-    width: size
-    height: size
+    implicitWidth: size
+    implicitHeight: size
     visible: source !== ""
 
     VectorImage {
         id: icon
         source: `qrc:/qt/qml/remiter/assets/icons/${svgIcon.source}`
-        anchors.fill: parent
+        anchors.centerIn: parent
+        width: svgIcon.size
+        height: svgIcon.size
         fillMode: VectorImage.PreserveAspectFit
         preferredRendererType: VectorImage.CurveRenderer
         visible: false
